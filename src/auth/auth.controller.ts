@@ -14,8 +14,10 @@ import { CreateUserDto, LoginDto, RegisterUserDto, UpdateUserDto } from './dto';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginRespone } from './interfaces/login-response';
 import { User } from './entities/user.entity';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -34,6 +36,7 @@ export class AuthController {
     return this.authService.register(registerUserDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get()
   findAll() {
